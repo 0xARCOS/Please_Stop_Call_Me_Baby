@@ -1,0 +1,10 @@
+[flake8]
+# flake8 does not read pyproject.toml, so its excludes live here.
+# Keep in sync with [tool.mypy] exclude: skip the virtualenv (third-party
+# packages such as sympy crash pyflakes with RecursionError) and the
+# provided SDK / grader code that is not ours to lint.
+extend-exclude =
+    .venv,
+    llm_sdk,
+    llm_sdk_subject,
+    moulinette
