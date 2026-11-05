@@ -1,0 +1,41 @@
+[project]
+name = "call_me_baby"
+version = "0.1.0"
+description = "Function calling with constrained decoding on Qwen3-0.6B"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "huggingface-hub>=0.20.0",
+    "numpy>=2.0.0",
+    "pydantic>=2.0.0",
+    "torch>=2.0.0",
+    "transformers>=4.51.0",
+]
+
+[dependency-groups]
+dev = [
+    "flake8>=7.0.0",
+    "mypy>=1.0.0",
+    "pytest>=9.1.1",
+]
+
+# CPU-only torch: the default Linux wheel pulls several GB of CUDA libraries.
+[tool.uv.sources]
+torch = { index = "pytorch-cpu" }
+
+[[tool.uv.index]]
+name = "pytorch-cpu"
+url = "https://download.pytorch.org/whl/cpu"
+explicit = true
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["test"]
+
+[tool.mypy]
+plugins = ["pydantic.mypy"]
+exclude = ["^llm_sdk/", "^llm_sdk_subject/", "^moulinette/", "^\\.venv/"]
+
+[[tool.mypy.overrides]]
+module = ["llm_sdk", "llm_sdk.*"]
+ignore_errors = true
